@@ -10,6 +10,7 @@ pipeline {
     }
     stages {
         stage('Development Build') {
+            agent any
             when { not { branch 'master' } }
             steps {
                 // Helm lint at a minimum
@@ -20,6 +21,7 @@ pipeline {
         }
 
         stage('Master Build') {
+            agent any
             when { branch 'master' }
             steps {
                 sh 'echo "Stub for the merge to master"'
