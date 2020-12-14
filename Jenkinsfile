@@ -9,26 +9,31 @@ pipeline {
         skipDefaultCheckout false
     }
     stages {
-        stage('Development Build') {
+        stage('Build Stages') {
             agent any
-            when { not { branch 'master' } }
-            steps {
-                // Helm lint at a minimum
-                sh 'echo "Stub for the feature branch build process"'
-                sh 'pwd'
-                sh 'ls -al'
+            stages {
+                stage('Feature Branch') {
+                    when { not { branch 'master' } }
+                    steps {
+                        // Helm lint at a minimum
+                        sh 'echo "Stub for the feature branch build process"'
+                        sh 'pwd'
+                        sh 'ls -al'
+                    }
+                }
+                stage('Master Branch') {
+                    when { branch 'master' }
+                    steps {
+                        sh 'echo "Stub for the merge to master"'
+                        sh 'pwd'
+                        sh 'ls -al'
+                    }
+                }
             }
+            
         }
 
-        stage('Master Build') {
-            agent any
-            when { branch 'master' }
-            steps {
-                sh 'echo "Stub for the merge to master"'
-                sh 'pwd'
-                sh 'ls -al'
-            }
-        }
+        
 
     //     stage('Mirror to public Github') {
     //         agent any
