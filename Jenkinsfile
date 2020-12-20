@@ -2,7 +2,7 @@ pipeline {
     agent none
  
    environment {
-         GITHUB_REPO = 'https://github.com/brandtkeller/nfs-client-provisioner.git'
+         GITHUB_REPO = 'github.com/brandtkeller/nfs-client-provisioner.git'
     }
     options {
         skipStagesAfterUnstable()
