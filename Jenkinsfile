@@ -32,26 +32,19 @@ pipeline {
             }
             
         }
-
-        
-
-    //     stage('Mirror to public Github') {
-    //         agent any
-    //         when { branch 'master' }
-    //         steps {
-    //             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-    //             withCredentials([usernamePassword(credentialsId: 'git_creds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    //                             sh 'rm -rf *'
-    //                             sh 'git clone --mirror $HOME_REPO'
-    //             }
-    //             withCredentials([usernamePassword(credentialsId: 'github_creds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-    //                         dir("${PROJECT}.git"){
-    //                                 sh 'git remote add --mirror=fetch github https://$GIT_USERNAME:$GIT_PASSWORD@$GITHUB_REPO'
-    //                                 sh 'git push github --all'
-    //                         }
-    //                 }
-    //             }
-    //         }
-    //   }
+        stage('Mirror to public Github') {
+            agent any
+            when { branch 'master' }
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                withCredentials([usernamePassword(credentialsId: 'git_creds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                            dir("${PROJECT}.git"){
+                                    sh 'git remote add --mirror=fetch github https://$GIT_USERNAME:$GIT_PASSWORD@$GITHUB_REPO'
+                                    sh 'git push github --all'
+                            }
+                    }
+                }
+            }
+      }
     }
 }
