@@ -1,10 +1,14 @@
 # NFS Client Provisioner
-
-Personal fork of the deprecated and non-managed [NFS client provisioner](https://github.com/helm/charts/tree/master/stable/nfs-client-provisioner) in the stable repository.
-
-
 The [NFS client provisioner](https://github.com/brandtkeller/nfs-client-provisioner) is an automatic provisioner for Kubernetes that uses your *already configured* NFS server, automatically creating Persistent Volumes.
 
+## Notes
+* Personal fork of the deprecated and non-managed [NFS client provisioner](https://github.com/helm/charts/tree/master/stable/nfs-client-provisioner) in the stable repository.
+    * This fork contains upgrades such as readiness and liveness probes among other minor adjustments for stability
+* This repository is a mirror, changes are only pushed to this github repoistory on merge to the master branch.
+    * I develop entirely in a development cluster. For more information please feel free to submit an issue or [email](info@brandtkeller.net).
+    * See Jenkinsfile for explicit logic.
+* TODO:
+    * Create a jnlp agent for kubernetes w/ helm installed for linting quality gates.
 ## Usage
 
 ### Prerequisite

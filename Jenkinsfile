@@ -30,7 +30,6 @@ pipeline {
                     }
                 }
             }
-            
         }
         stage('Mirror to public Github') {
             agent any
