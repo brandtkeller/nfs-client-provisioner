@@ -10,7 +10,7 @@ pipeline {
     }
     stages {
         stage('Build Stages') {
-            agent any
+            agent { label 'jenkins-agent' }
             stages {
                 stage('Feature Branch') {
                     when { not { branch 'master' } }
@@ -29,19 +29,18 @@ pipeline {
                         sh 'ls -al'
                     }
                 }
-            }
-        }
-        stage('Mirror to public Github') {
-            agent any
-            when { branch 'master' }
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                withCredentials([usernamePassword(credentialsId: 'git_creds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh 'git remote add --mirror=push github https://$GIT_USERNAME:$GIT_PASSWORD@$GITHUB_REPO'
-                        sh 'git push github --all'
-                    }
+                stage('Mirror to public Github') {
+                    when { branch 'master' }
+                        steps {
+                            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            withCredentials([usernamePassword(credentialsId: 'git_token', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                                    sh 'git remote add --mirror=push github https://$GIT_USERNAME:$GIT_PASSWORD@$GITHUB_REPO'
+                                    sh 'git push github --all'
+                                }
+                            }
+                        }
                 }
             }
-      }
+        }
     }
 }
