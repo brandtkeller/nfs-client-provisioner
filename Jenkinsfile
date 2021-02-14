@@ -10,23 +10,19 @@ pipeline {
     }
     stages {
         stage('Build Stages') {
-            agent { label 'jenkins-jenkins-agent' }
+            agent { label 'jenkins-base-agent' }
             stages {
                 stage('Feature Branch') {
                     when { not { branch 'master' } }
                     steps {
-                        // Helm lint at a minimum
-                        sh 'echo "Stub for the feature branch build process"'
-                        sh 'pwd'
-                        sh 'ls -al'
+                        sh 'helm lint'
                     }
                 }
                 stage('Master Branch') {
                     when { branch 'master' }
                     steps {
-                        sh 'echo "Stub for the merge to master"'
-                        sh 'pwd'
-                        sh 'ls -al'
+                        sh 'helm lint'
+                        sh 'echo "package and push the chart to some remote helm registry"'
                     }
                 }
                 stage('Mirror to public Github') {
